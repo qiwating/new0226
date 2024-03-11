@@ -95,12 +95,8 @@ export default async function Order({ params: { id } }) {
                   <div className={classes.rowContent}>
                     {!stripeProductID && (
                       <p className={classes.warning}>
-                        {'This product is not yet connected to Stripe. To link this product, '}
-                        <Link
-                          href={`${process.env.NEXT_PUBLIC_SERVER_URL}/admin/collections/products/${id}`}
-                        >
-                          edit this product in the admin panel
-                        </Link>
+                        {'Contact us directly to confirm the current prices, '}
+                        
                         {'.'}
                       </p>
                     )}

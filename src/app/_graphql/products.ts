@@ -1,5 +1,5 @@
 import { ARCHIVE_BLOCK, CALL_TO_ACTION, CONTENT, MEDIA_BLOCK } from './blocks'
-import { CATEGORIES } from './categories'
+import { PRODUCT_CATEGORIES } from './categories'
 import { META } from './meta'
 
 export const PRODUCTS = `
@@ -20,7 +20,7 @@ export const PRODUCT = `
         title
         singleprice
         stripeProductID
-        ${CATEGORIES}
+        ${PRODUCT_CATEGORIES}
         layout {
           ${CALL_TO_ACTION}
           ${CONTENT}

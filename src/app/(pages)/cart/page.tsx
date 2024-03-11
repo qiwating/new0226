@@ -64,23 +64,10 @@ export default async function Cart() {
             className={classes.message}
             warning={
               <Fragment>
-                {'To enable checkout, you must '}
-                <a
-                  href="https://dashboard.stripe.com/test/apikeys"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {'obtain your Stripe API Keys'}
-                </a>
-                {' then set them as environment variables. See the '}
-                <a
-                  href="https://github.com/payloadcms/payload/blob/main/templates/ecommerce/README.md#stripe"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {'README'}
-                </a>
-                {' for more details.'}
+                {'The product prices are subject to change due to fluctuating market conditions.'}
+              
+                {'To ensure accuracy and provide you with the best possible pricing, we kindly request that you contact us directly to confirm the current prices. '}
+                
               </Fragment>
             }
           />

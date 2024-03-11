@@ -12,7 +12,6 @@ import { Gutter } from '../../Gutter'
 
 import classes from './index.module.scss'
 
-
 const FooterComponent = ({ footer }: { footer: Footer }) => {
   const pathname = usePathname()
   const navItems = footer?.navItems || []

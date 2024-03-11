@@ -3,78 +3,42 @@
 import React, { useEffect, useState } from 'react'
 
 import { Product } from '../../../payload/payload-types'
-import { AddToCartButton } from '../AddToCartButton'
-import { RemoveFromCartButton } from '../RemoveFromCartButton'
 
 import classes from './index.module.scss'
 
-export const priceFromJSON = (priceJSON: string, quantity: number = 1, raw?: boolean): string => {
-  let price = ''
-
-  if (priceJSON) {
-    try {
-      const parsed = JSON.parse(priceJSON)?.data[0]
-      const priceValue = parsed.unit_amount * quantity
-      const priceType = parsed.type
-
-      if (raw) return priceValue.toString()
-
-      price = (priceValue / 100).toLocaleString('en-US', {
-        style: 'currency',
-        currency: 'USD', // TODO: use `parsed.currency`
-      })
-
-      if (priceType === 'recurring') {
-        price += `/${
-          parsed.recurring.interval_count > 1
-            ? `${parsed.recurring.interval_count} ${parsed.recurring.interval}`
-            : parsed.recurring.interval
-        }`
-      }
-    } catch (e) {
-      console.error(`Cannot parse priceJSON`) // eslint-disable-line no-console
-    }
-  }
-
-  return price
-}
+// Import statements...
 
 export const Price: React.FC<{
   product: Product
   quantity?: number
   button?: 'addToCart' | 'removeFromCart' | false
+  price?: number  // Add a new prop for the price
 }> = props => {
-  const { product, product: { priceJSON } = {}, button = 'addToCart', quantity } = props
+  const { product, quantity, button = 'addToCart', price } = props;
 
-  const [price, setPrice] = useState<{
-    actualPrice: string
-    withQuantity: string
-  }>(() => ({
-    actualPrice: priceFromJSON(priceJSON),
-    withQuantity: priceFromJSON(priceJSON, quantity),
-  }))
+  const formattedPrice = (price / 100).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD', // Change to your desired currency
+  });
 
-  useEffect(() => {
-    setPrice({
-      actualPrice: priceFromJSON(priceJSON),
-      withQuantity: priceFromJSON(priceJSON, quantity),
-    })
-  }, [priceJSON, quantity])
+  const totalPrice = (price * (quantity || 1)) / 100;
+  const formattedTotalPrice = totalPrice.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD', // Change to your desired currency
+  });
 
   return (
     <div className={classes.actions}>
-      {typeof price?.actualPrice !== 'undefined' && price?.withQuantity !== '' && (
+      {typeof price !== 'undefined' && (
         <div className={classes.price}>
-          <p>{price?.withQuantity}</p>
-          {quantity > 1 && (
-            <small className={classes.priceBreakdown}>{`${price.actualPrice} x ${quantity}`}</small>
+          {quantity && (
+            <p>
+              {formattedTotalPrice} ({quantity} {quantity > 1 ? 'items' : 'item'})
+            </p>
           )}
+          {!quantity && <p>{formattedPrice}</p>}
         </div>
       )}
-      {button && button === 'addToCart' && (
-        <AddToCartButton product={product} appearance="default" />
-      )}
-      {button && button === 'removeFromCart' && <RemoveFromCartButton product={product} />}
     </div>
-  )
-}
+  );
+};
