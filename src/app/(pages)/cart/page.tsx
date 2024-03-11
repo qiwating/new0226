@@ -65,9 +65,7 @@ export default async function Cart() {
             warning={
               <Fragment>
                 {'The product prices are subject to change due to fluctuating market conditions.'}
-              
                 {'To ensure accuracy and provide you with the best possible pricing, we kindly request that you contact us directly to confirm the current prices. '}
-                
               </Fragment>
             }
           />
