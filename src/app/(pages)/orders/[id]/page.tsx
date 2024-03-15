@@ -96,7 +96,6 @@ export default async function Order({ params: { id } }) {
                     {!stripeProductID && (
                       <p className={classes.warning}>
                         {'Contact us directly to confirm the current prices, '}
-                        
                         {'.'}
                       </p>
                     )}

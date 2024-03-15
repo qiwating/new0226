@@ -127,7 +127,6 @@ export const CheckoutPage: React.FC<{
                       {!stripeProductID && (
                         <p className={classes.warning}>
                           {'Contact us directly to confirm the current prices, '}
-                         
                           {'.'}
                         </p>
                       )}

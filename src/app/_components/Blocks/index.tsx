@@ -84,6 +84,5 @@ export const Blocks: React.FC<{
       </Fragment>
     )
   }
-
   return null
 }
