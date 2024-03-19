@@ -1,6 +1,8 @@
 import { webpackBundler } from '@payloadcms/bundler-webpack'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { payloadCloud } from '@payloadcms/plugin-cloud'
+import { cloudStorage } from '@payloadcms/plugin-cloud-storage'
+import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3'
 import nestedDocs from '@payloadcms/plugin-nested-docs'
 import redirects from '@payloadcms/plugin-redirects'
 import seo from '@payloadcms/plugin-seo'
@@ -28,16 +30,12 @@ import { Header } from './globals/Header'
 import { Settings } from './globals/Settings'
 import { priceUpdated } from './stripe/webhooks/priceUpdated'
 import { productUpdated } from './stripe/webhooks/productUpdated'
-import { s3Adapter } from '@payloadcms/plugin-cloud-storage/s3';
-import { cloudStorage } from '@payloadcms/plugin-cloud-storage';
 
 const generateTitle: GenerateTitle = () => {
   return 'My Store'
 }
 
 const mockModulePath = path.resolve(__dirname, './emptyModuleMock.js')
-
-
 
 const storageAdapter = s3Adapter({
   config: {
@@ -46,7 +44,7 @@ const storageAdapter = s3Adapter({
     credentials: {
       accessKeyId: process.env.S3_ACCESS_KEY,
       secretAccessKey: process.env.S3_SECRET_KEY,
-    }
+    },
   },
   bucket: process.env.S3_BUCKET_NAME,
 })
@@ -158,8 +156,9 @@ export default buildConfig({
     }),
     payloadCloud(),
     cloudStorage({
-      collections: { // Create an object for every upload collection, in this case it's only "media"
-        'media': {
+      collections: {
+        // Create an object for every upload collection, in this case it's only "media"
+        media: {
           adapter: storageAdapter,
         },
       },
